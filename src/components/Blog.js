@@ -3,17 +3,13 @@ import React from "react";
 const BlogPost = ({ id, title, content, editPost, deletePost }) => {
   return (
     <>
-      <div className="card card-width bg-dark">
+      <div className="card card-width bg-light">
         <section key={id}>
           <h3>{title}</h3>
           <hr className="new1"></hr>
           <p>{content}</p>
-          <span title="edit post" onClick={() => editPost(id)}>
-            <i className="edit-button far fa-edit fa-2x button-css" />
-          </span>
-          <span title="delete post" onClick={() => deletePost(id)}>
-            <i className="delete-button fas fa-trash fa-2x ml-2 button-css" />
-          </span>
+          <button type="button" class="btn btn-outline-info"  onClick={() => editPost(id)}>Edit</button>&nbsp;&nbsp;
+          <button type="button" class="btn btn-outline-danger" onClick={() => deletePost(id)}>Delete</button>
         </section>
       </div>
     </>

@@ -2,7 +2,7 @@ import React from "react";
 
 const ModifyPost = (props) => {
   return (
-    <>
+    <div class="container">
       <form>
         <h2>Modify Post</h2>
         <label className="col-sm-12 col-form-label">
@@ -24,19 +24,14 @@ const ModifyPost = (props) => {
             defaultValue={props.content}
             onChange={props.savePostContentToState}
             placeholder="contents"
-            rows="18"
-            cols="41"
+            rows="7"
+            cols="22"
           />
         </label>
-        <button
-          title="update changes"
-          className="btn btn-success ml-3"
-          onClick={props.updatePost}
-        >
-          Update Post
-        </button>
+        <br />
+        <button type="button"  title="update changes"  class="btn btn-outline-success" onClick={props.updatePost}> Update Post</button>
       </form>
-    </>
+    </div>
   );
 };
 export default ModifyPost;

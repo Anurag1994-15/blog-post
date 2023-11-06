@@ -66,9 +66,9 @@ const dispatch =useDispatch()
           
         })
         .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          setErrorMessage(errorCode + "-" + errorMessage);
+          //const errorCode = error.code;
+          //const errorMessage = error.message;
+          setErrorMessage("The password/Email you entered does not match to this user.");
         });
     }
   };

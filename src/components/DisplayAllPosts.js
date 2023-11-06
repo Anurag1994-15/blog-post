@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import CreateNewPost from "./CreateNewPost";
 import ModifyPost from "./ModifyPost";
 import BlogPost from "./Blog";
+import "../style.css";
 
 const DisplayAllPosts = () => {
   // managing states below
@@ -94,7 +95,7 @@ const DisplayAllPosts = () => {
 
   if (isCreateNewPost) {
     return (
-      <>
+      <div class="container">
         <CreateNewPost
           savePostTitleToState={savePostTitleToState}
           savePostContentToState={savePostContentToState}
@@ -103,13 +104,9 @@ const DisplayAllPosts = () => {
           savePost={savePost}
         />
         {/* Cancel Button */}
-        <button
-          className="btn btn-danger cancel-button"
-          onClick={toggleCreateNewPost}
-        >
-          Cancel
-        </button>
-      </>
+       
+        <button  class="btn btn-outline-danger mt-5 ml-3"  onClick={toggleCreateNewPost}>Cancel</button>
+      </div>
     );
   } else if (isModifyPost) {
     const post = allPosts.find((post) => {
@@ -117,7 +114,7 @@ const DisplayAllPosts = () => {
     });
 
     return (
-      <>
+      <div class="container">
         <ModifyPost
           title={post.title}
           content={post.content}
@@ -126,18 +123,13 @@ const DisplayAllPosts = () => {
           savePostContentToState={savePostContentToState}
           toggleCreateNewPost={toggleCreateNewPost}
         />
-        <button
-          className="btn btn-danger cancel-update-button"
-          onClick={toggleModifyPostComponent}
-        >
-          Cancel
-        </button>
-      </>
+        <button  class="btn btn-outline-danger mt-5 ml-3" onClick={toggleModifyPostComponent}>Cancel</button>
+      </div>
     );
   }
 
   return (
-    <>
+    <div class="container">
       <h2>All Posts</h2>
       {!allPosts.length ? (
         <div>
@@ -161,7 +153,7 @@ const DisplayAllPosts = () => {
       >
         Create New
       </button>
-    </>
+    </div>
   );
 };
 export default DisplayAllPosts;

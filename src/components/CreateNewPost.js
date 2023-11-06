@@ -2,7 +2,7 @@ import React from "react";
 
 const CreateNewPost = (props) => {
   return (
-    <>
+    <div class="container">
       <form onSubmit={props.savePost}>
         <h2>Create New Post</h2>
         <label className="col-sm-12 col-form-label">
@@ -24,18 +24,16 @@ const CreateNewPost = (props) => {
             className="form-control form-control-sm"
             placeholder="description"
             onChange={props.savePostContentToState}
-            rows="18"
-            cols="41"
+            rows="7"
+            cols="22"
             required
             ref={props.getContent}
           />
         </label>
         <br />
-        <button title="save post" className="btn btn-success ml-3">
-          save
-        </button>
+        <button  title="save post" className="btn btn-outline-success">Save</button>
       </form>
-    </>
+    </div>
   );
 };
 

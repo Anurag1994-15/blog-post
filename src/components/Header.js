@@ -33,19 +33,22 @@ useEffect(() => {
 }, []);
 
   return (
-    <div className="absolute w-screen px-4 py-2 bg-gradient-to-b from-black z-10 flex justify-between" >
+    // <div className=" w-screen px-4 py-2 bg-gradient-to-b from-black z-10 flex justify-between" >
+     <div className={"w-screen px-4 py-2 bg-gradient-to-b from-black z-10 flex justify-between " + (user ? 'sticky-top' : 'absolute')}>
       <img
        className="w-32 "
        src="https://img.freepik.com/premium-vector/word-concept-color-geometric-shapes-blog_205544-13021.jpg"
        alt="logo"
        />
-        {user &&(<div className="flex p-2">
+        {user &&(<div className="flex p-2 flex-col">
           <img
           className="w-12 h-12"
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOApFCSVByzhZorHUAP-J851JAYyOPtI1jdg&usqp=CAU"
           alt="userIcon"
           />
+          <div className="font-bold text-yellow-50">{user.displayName}</div>
           <button onClick={handleSignOut} className="font-bold text-yellow-50">(Sign Out)</button>
+          
         </div>
         )}
     </div>

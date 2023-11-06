@@ -26,13 +26,19 @@
   }
   
   .button-edits {
-    margin: 40px;
+    background-color: yellowgreen;
+    border: none;
+    color: black;
+    padding: 15px 32px;
+    text-align: center;
+    font-size: 16px;
+    margin: 4px 2px;
   }
   
   .card-width {
-    color: white;
+    color: rgb(16, 13, 13);
     padding: 20px;
-    margin: 40px;
+    margin: 30px;
   }
   
   .create-post {
@@ -40,17 +46,27 @@
   }
   
   .edit-button {
-    position: absolute;
-    top: 20px;
-    right: 55px;
-    color: cyan;
+   
+    background-color: #b54389; 
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
   }
   
   .delete-button {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    color: cyan;
+    
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
   }
   
   .cancel-button {
