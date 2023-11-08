@@ -1,8 +1,9 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
 const CreateNewPost = (props) => {
   return (
-    <div class="container">
+    <div className="container">
       <form onSubmit={props.savePost}>
         <h2>Create New Post</h2>
         <label className="col-sm-12 col-form-label">
@@ -31,9 +32,10 @@ const CreateNewPost = (props) => {
           />
         </label>
         <br />
-        <button  title="save post" className="btn btn-outline-success">Save</button>
+        <button  title="save post" className="btn btn-outline-success"><FontAwesomeIcon icon="fas fa-save" /></button>
       </form>
     </div>
+    
   );
 };
 

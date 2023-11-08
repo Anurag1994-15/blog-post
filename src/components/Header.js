@@ -34,7 +34,7 @@ useEffect(() => {
 
   return (
     // <div className=" w-screen px-4 py-2 bg-gradient-to-b from-black z-10 flex justify-between" >
-     <div className={"w-screen px-4 py-2 bg-gradient-to-b from-black z-10 flex justify-between " + (user ? 'sticky-top' : 'absolute')}>
+     <div className={"px-4 py-2 bg-gradient-to-b from-black z-10 flex justify-between " + (user ? 'sticky-top' : 'absolute')}>
       <img
        className="w-32 "
        src="https://img.freepik.com/premium-vector/word-concept-color-geometric-shapes-blog_205544-13021.jpg"
@@ -48,7 +48,6 @@ useEffect(() => {
           />
           <div className="font-bold text-yellow-50">{user.displayName}</div>
           <button onClick={handleSignOut} className="font-bold text-yellow-50">(Sign Out)</button>
-          
         </div>
         )}
     </div>

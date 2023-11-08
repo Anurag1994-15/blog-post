@@ -3,12 +3,13 @@ import CreateNewPost from "./CreateNewPost";
 import ModifyPost from "./ModifyPost";
 import BlogPost from "./Blog";
 import "../style.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const DisplayAllPosts = () => {
   // managing states below
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [allPosts, setAllPosts] = useState([
+  const [allPosts, setAllPosts] = useState(JSON.parse(window.localStorage.getItem("allPosts")) || [
     {
       id: 1,
       title: "React",
@@ -26,6 +27,7 @@ const DisplayAllPosts = () => {
   const [isCreateNewPost, setIsCreateNewPost] = useState(false);
   const [isModifyPost, setIsModifyPost] = useState(false);
   const [editPostId, setEditPostId] = useState("");
+  const [isDeletePost,setIsDeletePost] = useState(false);
 
   // Initialize useRef (to empty title and content once saved)
   const getTitle = useRef();
@@ -46,9 +48,11 @@ const DisplayAllPosts = () => {
     event.preventDefault();
     const id = Date.now();
     setAllPosts([...allPosts, { title, content, id }]);
+    const updatedAllPosts=[...allPosts, { title, content, id }];
     getTitle.current.value = "";
     getContent.current.value = "";
     toggleCreateNewPost();
+    window.localStorage.setItem("allPosts", JSON.stringify(updatedAllPosts))
   };
 
   // function 4 (toggle create new post visibility)
@@ -82,20 +86,27 @@ const DisplayAllPosts = () => {
       return eachPost;
     });
     setAllPosts(updatedPost);
+    window.localStorage.setItem("allPosts", JSON.stringify(updatedPost))
     toggleModifyPostComponent();
   };
 
   // function 8 (to delete posts)
   const deletePost = (id) => {
+    setIsDeletePost(true);
     const modifiedPost = allPosts.filter((eachPost) => {
       return eachPost.id !== id;
     });
     setAllPosts(modifiedPost);
+    window.localStorage.setItem("allPosts", JSON.stringify(modifiedPost))
+
   };
+  const onDeleteReset=(value)=>{
+    setIsDeletePost(value);
+  }
 
   if (isCreateNewPost) {
     return (
-      <div class="container">
+      <div className="container">
         <CreateNewPost
           savePostTitleToState={savePostTitleToState}
           savePostContentToState={savePostContentToState}
@@ -105,7 +116,8 @@ const DisplayAllPosts = () => {
         />
         {/* Cancel Button */}
        
-        <button  class="btn btn-outline-danger mt-5 ml-3"  onClick={toggleCreateNewPost}>Cancel</button>
+        <button  className="btn btn-outline-danger mt-5 ml-3"  onClick={toggleCreateNewPost}><FontAwesomeIcon icon="fas fa-cut" /></button>
+        
       </div>
     );
   } else if (isModifyPost) {
@@ -114,7 +126,8 @@ const DisplayAllPosts = () => {
     });
 
     return (
-      <div class="container">
+      <div className="container">
+       
         <ModifyPost
           title={post.title}
           content={post.content}
@@ -123,13 +136,13 @@ const DisplayAllPosts = () => {
           savePostContentToState={savePostContentToState}
           toggleCreateNewPost={toggleCreateNewPost}
         />
-        <button  class="btn btn-outline-danger mt-5 ml-3" onClick={toggleModifyPostComponent}>Cancel</button>
+        <button  className="btn btn-outline-danger mt-5 ml-3" onClick={toggleModifyPostComponent}><FontAwesomeIcon icon="fas fa-cut" /></button>
       </div>
     );
   }
 
   return (
-    <div class="container">
+    <div className="container">
       <h2>All Posts</h2>
       {!allPosts.length ? (
         <div>
@@ -144,14 +157,20 @@ const DisplayAllPosts = () => {
             content={eachPost.content}
             editPost={editPost}
             deletePost={deletePost}
+            isDeletePost= {isDeletePost}
+            onDeleteReset={onDeleteReset}
           />
         ))
       )}
+               { isDeletePost && <div className="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>Hi !</strong> Post is deleted... 
+  <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close" onClick={()=>onDeleteReset(false)} ></button>
+</div>}
       <button
         className="btn btn-outline-info button-edits create-post"
         onClick={toggleCreateNewPost}
       >
-        Create New
+       <FontAwesomeIcon icon="fa fa-plus" />
       </button>
     </div>
   );
