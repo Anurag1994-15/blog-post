@@ -4,6 +4,7 @@ import { auth } from '../utils/firebase';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUser, removeUser } from '../utils/userSlice';
+import ChatModal from './ChatModal';
 
 const Header = () => {
   const dispatch=useDispatch();
@@ -47,9 +48,12 @@ useEffect(() => {
           alt="userIcon"
           />
           <div className="font-bold text-yellow-50">{user.displayName}</div>
+          
           <button onClick={handleSignOut} className="font-bold text-yellow-50">(Sign Out)</button>
+          <ChatModal/>
         </div>
         )}
+       
     </div>
    
   )
