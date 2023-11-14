@@ -40,7 +40,9 @@ useEffect(() => {
        className="w-32 "
        src="https://img.freepik.com/premium-vector/word-concept-color-geometric-shapes-blog_205544-13021.jpg"
        alt="logo"
+       data-testid="header-logo"
        />
+       
         {user &&(<div className="flex p-2 flex-col">
           <img
           className="w-12 h-12"
@@ -49,8 +51,8 @@ useEffect(() => {
           />
           <div className="font-bold text-yellow-50">{user.displayName}</div>
           
-          <button onClick={handleSignOut} className="font-bold text-yellow-50">(Sign Out)</button>
-          <ChatModal/>
+          <button data-testid="signOut-button" onClick={handleSignOut} className="font-bold text-yellow-50">(Sign Out)</button>
+          
         </div>
         )}
        

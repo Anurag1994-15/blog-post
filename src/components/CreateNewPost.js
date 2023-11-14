@@ -3,9 +3,9 @@ import React from "react";
 
 const CreateNewPost = (props) => {
   return (
-    <div className="container">
+    <div className="container" >
       <form onSubmit={props.savePost}>
-        <h2>Create New Post</h2>
+        <h2 data-testid="new-post">Create New Post</h2>
         <label className="col-sm-12 col-form-label">
           <b>Title</b>
           <input

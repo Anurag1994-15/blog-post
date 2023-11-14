@@ -3,6 +3,7 @@ import CreateNewPost from "./CreateNewPost";
 import ModifyPost from "./ModifyPost";
 import BlogPost from "./Blog";
 import "../style.css";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const DisplayAllPosts = () => {
@@ -136,7 +137,7 @@ const DisplayAllPosts = () => {
           savePostContentToState={savePostContentToState}
           toggleCreateNewPost={toggleCreateNewPost}
         />
-        <button  className="btn btn-outline-danger mt-5 ml-3" onClick={toggleModifyPostComponent}><FontAwesomeIcon icon="fas fa-cut" /></button>
+        <button  className="btn btn-outline-danger mt-5 ml-3"  onClick={toggleModifyPostComponent}><FontAwesomeIcon icon="fas fa-cut" /></button>
       </div>
     );
   }
@@ -169,6 +170,7 @@ const DisplayAllPosts = () => {
       <button
         className="btn btn-outline-info button-edits create-post"
         onClick={toggleCreateNewPost}
+        data-testid="create-btn"
       >
        <FontAwesomeIcon icon="fa fa-plus" />
       </button>

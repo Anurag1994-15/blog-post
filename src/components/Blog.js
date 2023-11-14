@@ -24,10 +24,10 @@ const BlogPost = ({ id, title, content, editPost, deletePost}) => {
           <h3>{title}</h3>
           <hr className="new1"></hr>
           <p>{content}</p>
-          <button type="button" className="btn btn-outline-info"  onClick={() => editPost(id)}><FontAwesomeIcon icon="fa-solid fa-edit" /></button>&nbsp;&nbsp;
-          <button type="button" className="btn btn-outline-danger" onClick={() => deletePost(id)}><FontAwesomeIcon icon="fa-solid fa-trash" /> </button>
-          <button type="button" className="btn btn-outline-primary float-right mr-3" onClick={() => handleLikeClick(id)}><FontAwesomeIcon icon="fa fa-thumbs-up" /> {likeCount}</button>
-          <button type="button" className="btn btn-outline-dark float-right mr-3" onClick={() => handleDislikeClick(id)}><FontAwesomeIcon icon="fa fa-thumbs-down" /> {dislikeCount}</button>
+          <button type="button" className="btn btn-outline-info" data-testid="modify-btn" onClick={() => editPost(id)}><FontAwesomeIcon icon="fa-solid fa-edit" /></button>&nbsp;&nbsp;
+          <button type="button" className="btn btn-outline-danger" data-testid="delete-btn" onClick={() => deletePost(id)}><FontAwesomeIcon icon="fa-solid fa-trash" /> </button>
+          <button type="button" className="btn btn-outline-primary float-right mr-3"  data-testid="like-btn" onClick={() => handleLikeClick(id)}><FontAwesomeIcon icon="fa fa-thumbs-up" /> {likeCount}</button>
+          <button type="button" className="btn btn-outline-dark float-right mr-3"  data-testid="dislike-btn" onClick={() => handleDislikeClick(id)}><FontAwesomeIcon icon="fa fa-thumbs-down" /> {dislikeCount}</button>
         </section>
       </div>
     </>
