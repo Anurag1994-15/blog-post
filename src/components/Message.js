@@ -11,7 +11,7 @@ const style = {
 
 const Message = ({ message }) => {
   const messageClass = 
-  message.uid === auth.currentUser.uid
+  message.uid === auth.currentUser?.uid
   ? `${style.sent}`
   : `${style.received}`
 
@@ -19,7 +19,7 @@ const Message = ({ message }) => {
     <div>
       <div className={`${style.message} ${messageClass}`}>
         <p className={style.name}>{message.name}</p>
-        <p>{message.text}</p>
+        <p className='mb-0'>{message.text}</p>
       </div>
     </div>
   );

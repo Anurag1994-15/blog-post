@@ -32,7 +32,7 @@ const CreateNewPost = (props) => {
           />
         </label>
         <br />
-        <button  title="save post" className="btn btn-outline-success"><FontAwesomeIcon icon="fas fa-save" /></button>
+        <button data-testid="save-btn"  title="save post" className="btn btn-outline-success"><FontAwesomeIcon icon="fas fa-save" /></button>
       </form>
     </div>
     

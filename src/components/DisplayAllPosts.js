@@ -10,25 +10,27 @@ const DisplayAllPosts = () => {
   // managing states below
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [allPosts, setAllPosts] = useState(JSON.parse(window.localStorage.getItem("allPosts")) || [
-    {
-      id: 1,
-      title: "React",
-      content:
-        "React is a JavaScript library created for building fast and interactive user interfaces for web and mobile applications. It is an open-source, component-based, front-end library responsible only for the application’s view layer. In Model View Controller (MVC) architecture, the view layer is responsible for how the app looks and feels. React was created by Jordan Walke, a software engineer at Facebook. "
-    },
-    {
-      id: 2,
-      title: "Django",
-      content:
-        "Django is a free and open source, full-stack web application framework, written in Python. Django Python is a framework for perfectionists with deadlines. With it, you can build better Web apps in much less time, and in less code."
-    }
-  ]);
+  const [allPosts, setAllPosts] = useState(
+    JSON.parse(window.localStorage.getItem("allPosts")) || [
+      {
+        id: 1,
+        title: "React",
+        content:
+          "React is a JavaScript library created for building fast and interactive user interfaces for web and mobile applications. It is an open-source, component-based, front-end library responsible only for the application’s view layer. In Model View Controller (MVC) architecture, the view layer is responsible for how the app looks and feels. React was created by Jordan Walke, a software engineer at Facebook. ",
+      },
+      {
+        id: 2,
+        title: "Django",
+        content:
+          "Django is a free and open source, full-stack web application framework, written in Python. Django Python is a framework for perfectionists with deadlines. With it, you can build better Web apps in much less time, and in less code.",
+      },
+    ]
+  );
   // const [allPosts, setAllPosts] = useState([]) // can also be used
   const [isCreateNewPost, setIsCreateNewPost] = useState(false);
   const [isModifyPost, setIsModifyPost] = useState(false);
   const [editPostId, setEditPostId] = useState("");
-  const [isDeletePost,setIsDeletePost] = useState(false);
+  const [isDeletePost, setIsDeletePost] = useState(false);
 
   // Initialize useRef (to empty title and content once saved)
   const getTitle = useRef();
@@ -49,11 +51,11 @@ const DisplayAllPosts = () => {
     event.preventDefault();
     const id = Date.now();
     setAllPosts([...allPosts, { title, content, id }]);
-    const updatedAllPosts=[...allPosts, { title, content, id }];
+    const updatedAllPosts = [...allPosts, { title, content, id }];
     getTitle.current.value = "";
     getContent.current.value = "";
     toggleCreateNewPost();
-    window.localStorage.setItem("allPosts", JSON.stringify(updatedAllPosts))
+    window.localStorage.setItem("allPosts", JSON.stringify(updatedAllPosts));
   };
 
   // function 4 (toggle create new post visibility)
@@ -80,14 +82,14 @@ const DisplayAllPosts = () => {
         return {
           ...eachPost,
           title: title || eachPost.title,
-          content: content || eachPost.content
+          content: content || eachPost.content,
         };
       }
 
       return eachPost;
     });
     setAllPosts(updatedPost);
-    window.localStorage.setItem("allPosts", JSON.stringify(updatedPost))
+    window.localStorage.setItem("allPosts", JSON.stringify(updatedPost));
     toggleModifyPostComponent();
   };
 
@@ -98,12 +100,11 @@ const DisplayAllPosts = () => {
       return eachPost.id !== id;
     });
     setAllPosts(modifiedPost);
-    window.localStorage.setItem("allPosts", JSON.stringify(modifiedPost))
-
+    window.localStorage.setItem("allPosts", JSON.stringify(modifiedPost));
   };
-  const onDeleteReset=(value)=>{
+  const onDeleteReset = (value) => {
     setIsDeletePost(value);
-  }
+  };
 
   if (isCreateNewPost) {
     return (
@@ -116,9 +117,13 @@ const DisplayAllPosts = () => {
           savePost={savePost}
         />
         {/* Cancel Button */}
-       
-        <button  className="btn btn-outline-danger mt-5 ml-3"  onClick={toggleCreateNewPost}><FontAwesomeIcon icon="fas fa-cut" /></button>
-        
+
+        <button
+          className="btn btn-outline-danger mt-5 ml-3"
+          onClick={toggleCreateNewPost}
+        >
+          <FontAwesomeIcon icon="fas fa-cut" />
+        </button>
       </div>
     );
   } else if (isModifyPost) {
@@ -128,7 +133,6 @@ const DisplayAllPosts = () => {
 
     return (
       <div className="container">
-       
         <ModifyPost
           title={post.title}
           content={post.content}
@@ -137,7 +141,12 @@ const DisplayAllPosts = () => {
           savePostContentToState={savePostContentToState}
           toggleCreateNewPost={toggleCreateNewPost}
         />
-        <button  className="btn btn-outline-danger mt-5 ml-3"  onClick={toggleModifyPostComponent}><FontAwesomeIcon icon="fas fa-cut" /></button>
+        <button
+          className="btn btn-outline-danger mt-5 ml-3"
+          onClick={toggleModifyPostComponent}
+        >
+          <FontAwesomeIcon icon="fas fa-cut" />
+        </button>
       </div>
     );
   }
@@ -158,21 +167,33 @@ const DisplayAllPosts = () => {
             content={eachPost.content}
             editPost={editPost}
             deletePost={deletePost}
-            isDeletePost= {isDeletePost}
+            isDeletePost={isDeletePost}
             onDeleteReset={onDeleteReset}
           />
         ))
       )}
-               { isDeletePost && <div className="alert alert-warning alert-dismissible fade show" role="alert">
-  <strong>Hi !</strong> Post is deleted... 
-  <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close" onClick={()=>onDeleteReset(false)} ></button>
-</div>}
+      {isDeletePost && (
+        <div
+          className="alert alert-warning alert-dismissible fade show"
+          role="alert"
+        >
+          <strong>Hi !</strong> Post is deleted...
+          <button
+            type="button"
+            className="btn-close"
+            data-bs-dismiss="alert"
+            data-testid="alert-close-btn"
+            aria-label="Close"
+            onClick={() => onDeleteReset(false)}
+          ></button>
+        </div>
+      )}
       <button
         className="btn btn-outline-info button-edits create-post"
         onClick={toggleCreateNewPost}
         data-testid="create-btn"
       >
-       <FontAwesomeIcon icon="fa fa-plus" />
+        <FontAwesomeIcon icon="fa fa-plus" />
       </button>
     </div>
   );

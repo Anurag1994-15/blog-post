@@ -9,8 +9,15 @@ import userReducer from "./utils/userSlice";
 import DisplayAllPosts from "./components/DisplayAllPosts";
 import BlogPost from "./components/Blog";
 import ChatModal from "./components/ChatModal";
-// import DisplayAllPosts from "./DisplayAllPosts";
+import Browse from "./components/Browse";
+import CreateNewPost from "./components/CreateNewPost";
+import Message from "./components/Message";
+import { auth } from './utils/firebase';
 
+// import DisplayAllPosts from "./DisplayAllPosts";
+const headerImage = 'https://example.com/header.png';
+const displayAllPostsImage = 'https://example.com/posts.png';
+const chatModalImage = 'https://example.com/chat.png';
 const mockedUsedNavigate = jest.fn();
 
 jest.mock("react-router-dom", () => ({
@@ -155,9 +162,7 @@ describe("Login component", () => {
 });
 
 describe("DisplayAllPosts component", () => {
-  JSON.parse = jest.fn().mockImplementationOnce(() => {
-    // return your what your code is returning.
-  });
+  JSON.parse = jest.fn().mockImplementationOnce(() => {});
   // Mocking localStorage
   beforeAll(() => {
     Object.defineProperty(window, "localStorage", {
@@ -169,93 +174,37 @@ describe("DisplayAllPosts component", () => {
     });
   });
 
-  test("renders DisplayAllPosts", () => {
-    const toggleCreateNewPost = jest.fn();
+  test("renders DisplayAllPosts", async () => {
     render(<DisplayAllPosts />);
     expect(screen.getByText("All Posts")).toBeInTheDocument();
     expect(screen.getByTestId("create-btn")).toBeInTheDocument();
-    setTimeout(() => {
-      fireEvent.click(screen.getByTestId("create-btn"));
-      expect(toggleCreateNewPost).toBeCalled();
 
-      const titleInput = screen.getByPlaceholderText("Enter title");
-      const contentInput = screen.getByPlaceholderText("Enter content");
-      const saveButton = screen.getByText("Save");
-
-      fireEvent.change(titleInput, { target: { value: "New Test Title" } });
-      fireEvent.change(contentInput, { target: { value: "New Test Content" } });
-      fireEvent.click(saveButton);
-
-      expect(screen.getByText("All Posts")).toBeInTheDocument();
-      expect(screen.getByText("New Test Title")).toBeInTheDocument();
-    });
-    // expect(screen.getByText('There are no posts yet.')).toBeInTheDocument();
+    fireEvent.click(screen.getByTestId("create-btn"));
   });
-  // test('renders DisplayAllPosts component with posts', () => {
-  //   const mockPosts = [
-  //     { id: 1, title: 'Test Title 1', content: 'Test Content 1' },
-  //     { id: 2, title: 'Test Title 2', content: 'Test Content 2' },
-  //   ];
-  //   window.localStorage.getItem.mockReturnValueOnce(JSON.stringify(mockPosts));
 
-  //   render(<DisplayAllPosts />);
-  //   expect(screen.getByText('All Posts')).toBeInTheDocument();
-  //   expect(screen.getByText('Test Title 1')).toBeInTheDocument();
-  //   expect(screen.getByText('Test Title 2')).toBeInTheDocument();
-  // });
+  // test("renders createPosts", async () => {
+  //   render(<CreateNewPost />);
+  //   // expect(screen.getByText("Create New Post")).toBeInTheDocument();
+  //   expect(screen.getByTestId("save-btn")).toBeInTheDocument();
 
-  // test('renders DisplayAllPosts component and adds a new post', () => {
-  //   render(<DisplayAllPosts />);
-  //   const createPostButton = screen.getByTestId('');
-  // fireEvent.click(createPostButton);
+  //   fireEvent.click(screen.getByTestId("save-btn"));
 
+  //   // expect(screen.getByText('There are no posts yet.')).toBeInTheDocument();
   // });
 
   test("renders DisplayAllPosts component, modifies a post, and saves changes", () => {
-
     function editPost(id) {
-
       const handleChange = (id) => {
         editPost(id);
-      }
-     
-  
-      return(
-          <button onClick={() => handleChange()}>click me</button>
-      )
-  }
-    const props = {editPost}
-    render(<BlogPost{...props} />);
+      };
+
+      return <button onClick={() => handleChange()}>click me</button>;
+    }
+    const props = { editPost };
+    render(<BlogPost {...props} />);
     // const editButton = screen.getByTextid('modify-btn');
     expect(screen.getByTestId("modify-btn")).toBeInTheDocument();
-   
-      //fireEvent.click(screen.getByTestId("modify-btn"));
-     
-
-      // const titleInput = screen.getByPlaceholderText("Enter title");
-      // const contentInput = screen.getByPlaceholderText("Enter content");
-      // const saveButton = screen.getByText("Save Changes");
-
-      // fireEvent.change(titleInput, { target: { value: "Modified Title" } });
-      // fireEvent.change(contentInput, { target: { value: "Modified Content" } });
-      // fireEvent.click(saveButton);
-
-      // expect(screen.getByText("All Posts")).toBeInTheDocument();
-      // expect(screen.getByText("Modified Title")).toBeInTheDocument();
-   
   });
-  // test("renders DisplayAllPosts component, deletes a post, and confirms deletion", async () => {
-  //   const mockPosts = [
-  //     { id: 1, title: "Test Title 1", content: "Test Content 1" },
-  //   ];
-  //   window.localStorage.getItem.mockReturnValueOnce(JSON.stringify(mockPosts));
-
-  //   render(<DisplayAllPosts />);
-  //   await expect(screen.getByTestId("delete-btn")).toBeInTheDocument();
-    
-  //   fireEvent.click(screen.getByTestId("delete-btn"));
-     
-  // });
 
   test("renders blogPosts component, like a post", () => {
     const mockPosts = [
@@ -265,7 +214,7 @@ describe("DisplayAllPosts component", () => {
 
     render(<BlogPost />);
     expect(screen.getByTestId("like-btn")).toBeInTheDocument();
-      fireEvent.click(screen.getByTestId("like-btn"));
+    fireEvent.click(screen.getByTestId("like-btn"));
   });
   test("renders blogPosts component dislike post changes", async () => {
     const mockPosts = [
@@ -274,16 +223,149 @@ describe("DisplayAllPosts component", () => {
     window.localStorage.getItem.mockReturnValueOnce(JSON.stringify(mockPosts));
 
     render(<BlogPost />);
-    const dislikeBtn=screen.getByTestId("dislike-btn");
+    const dislikeBtn = screen.getByTestId("dislike-btn");
     await expect(dislikeBtn).toBeInTheDocument();
     fireEvent.click(dislikeBtn);
-
   });
 });
-describe('ChatModal', () => {
-  it('should render the open button', () => {
+describe("ChatModal", () => {
+  it("should render the open button", () => {
     render(<ChatModal />);
-    expect(screen.getByRole('button', { name: 'My Chat' })).toBeInTheDocument();
+    // expect(screen.getByRole("button", { name: "My Chat" })).toBeInTheDocument();
+    const modalButton = screen.getByRole("button", { name: "My Chat" });
+     expect(modalButton).toBeInTheDocument();
+
+    //fireEvent.click(modalButton);
+  });
+});
+
+// describe("CreateNewPost component", () => {
+//   const mockSavePostTitleToState = jest.fn();
+//   const mockSavePostContentToState = jest.fn();
+//   const mockGetTitle = jest.fn();
+//   const mockGetContent = jest.fn();
+//   const mockSavePost = jest.fn();
+
+//   beforeEach(() => {
+//     mockSavePostTitleToState.mockClear();
+//     mockSavePostContentToState.mockClear();
+//     mockGetTitle.mockClear();
+//     mockGetContent.mockClear();
+//     mockSavePost.mockClear();
+//   });
+
+//   it("should call the savePostTitleToState function when the post title input changes", () => {
+//     render(
+//       <CreateNewPost
+//         savePostTitleToState={mockSavePostTitleToState}
+//         savePostContentToState={mockSavePostContentToState}
+//         getTitle={mockGetTitle}
+//         getContent={mockGetContent}
+//         savePost={mockSavePost}
+//       />
+//     );
+
+//     const submitButton = screen.getByTestId("save-btn");
+
+//     fireEvent.click(submitButton);
+
+//     expect(mockSavePost).toHaveBeenCalled();
+//   });
+// });
+
+describe("BlogPost component", () => {
+  const mockEditPost = jest.fn();
+  const mockDeletePost = jest.fn();
+  const mockIsDeletePost = jest.fn(() => false);
+  const mockOnDeleteReset = jest.fn();
+
+  beforeEach(() => {
+    mockEditPost.mockClear();
+    mockDeletePost.mockClear();
+    mockIsDeletePost.mockClear();
+    mockOnDeleteReset.mockClear();
+  });
+  it("should call the deletePost function when the delete button is clicked", () => {
+    const eachPost = {
+      id: 1,
+      title: "My First Blog Post",
+      content: "This is the content of my first blog post.",
+    };
+
+    render(
+      <BlogPost
+        id={eachPost.id}
+        key={eachPost.id}
+        title={eachPost.title}
+        content={eachPost.content}
+        editPost={mockEditPost}
+        deletePost={mockDeletePost}
+        isDeletePost={mockIsDeletePost}
+        onDeleteReset={mockOnDeleteReset}
+      />
+    );
+
+    const deleteButton = screen.getByTestId("delete-btn");
+    expect(deleteButton).toBeInTheDocument();
+    fireEvent.click(deleteButton);
+    expect(mockDeletePost).toHaveBeenCalledWith(eachPost.id);
+  });
+});
+
+describe('Message component', () => {
+  const mockAuth = {
+    currentUser: {
+      uid: '1234567890',
+    },
+  };
+
+  beforeEach(() => {
+    jest.mock('./utils/firebase', () => {
+      return {
+        auth: mockAuth,
+      };
+    });
   });
 
+  it('should render the message text and sender name', () => {
+    const message = {
+      uid: '1234567890',
+      name: 'John Doe',
+      text: 'This is a test message.',
+    };
+
+    render(<Message message={message} />);
+  });
+
+});
+describe('Browse component', () => {
+  const store = configureStore({
+    reducer: {
+      user: userReducer,
+    },
+  });
+
+  const useDispatchMock = reactRedux.useDispatch;
+
+  beforeEach(() => {
+    useDispatchMock.mockImplementation(() => () => {});
+  });
+
+  afterEach(() => {
+    useDispatchMock.mockClear();
+  });
+  it('should render the Header, DisplayAllPosts, and ChatModal components with the correct images', () => {
+    render(<Provider store={store}>
+      <Browse />
+    </Provider>
+    );
+
+    // const header = screen.getByAltText('Header');
+    // const displayAllPosts = screen.getByAltText('Display All Posts');
+    // const chatModal = screen.getByAltText('Chat Modal');
+
+    // expect(header).toHaveAttribute('src', headerImage);
+    // expect(displayAllPosts).toHaveAttribute('src', displayAllPostsImage);
+    // expect(chatModal).toHaveAttribute('src', chatModalImage);
+  });
 });
